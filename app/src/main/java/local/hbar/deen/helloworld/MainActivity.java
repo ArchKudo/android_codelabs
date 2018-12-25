@@ -1,5 +1,6 @@
 package local.hbar.deen.helloworld;
 
+import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,4 +18,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Hello, Scrolling Text!");
     }
 
+    public void launchSecondActivity(View view) {
+        Intent intent = new Intent(this, SecondActivity.class);
+        startActivity(intent);
+    }
 }
