@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
@@ -10,49 +9,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="vertical">
 
         <EditText
+            android:id="@+id/edit_text_web"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_text_web"
-            android:hint="e.g. http://google.com" />
+            android:hint="@string/eg_url" />
 
         <Button
+            android:id="@+id/btn_web"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="launchBrowser"
-            android:id="@+id/btn_loc"
-            android:text="open website"
-            />
+            android:text="@string/open_website" />
 
         <EditText
+            android:id="@+id/edit_text_loc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_text_location"
-            android:hint="e.g. Pyramid of Giza" />
+            android:hint="@string/eg_loc" />
 
         <Button
+            android:id="@+id/btn_loc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="launchMap"
-            android:id="@+id/btn_share"
-            android:text="open location"
-            />
+            android:text="@string/open_location" />
 
         <EditText
+            android:id="@+id/edit_text_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_text_msg"
-            android:hint="e.g. Some Text" />
+            android:hint="@string/eg_text" />
 
         <Button
+            android:id="@+id/btn_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="shareText"
-            android:id="@+id/btn_web"
-            android:text="share this text"
-            />
+            android:text="@string/share_this_text" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
