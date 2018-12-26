@@ -26,10 +26,19 @@ public class MainActivity extends AppCompatActivity {
         mTextHeader = findViewById(R.id.text_header);
         mTextMSG = findViewById(R.id.text_msg);
 
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.getBoolean("msg_visible")) {
+                mTextHeader.setVisibility(View.VISIBLE);
+                mTextMSG.setText(savedInstanceState.getString("msg_text"));
+            }
+        }
+
         // Logging
         Log.d(LOG_TAG, "Hello, Two Activities!");
 
         Log.d(LOG_TAG, "onCreate()");
+
     }
 
     @Override
@@ -63,12 +72,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mTextHeader.getVisibility() == View.VISIBLE) {
+            outState.putBoolean("msg_visible", true);
+            outState.putString("msg_text", mTextMSG.getText().toString());
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // TODO: Check for null / Why isn't hasExtra enough?
         if (requestCode == TEXT_REQUEST && resultCode == RESULT_OK && (data.hasExtra(SecondActivity.EXTRA_REPLY))) {
             mTextHeader.setVisibility(View.VISIBLE);
-            mTextMSG.setVisibility(View.VISIBLE);
             mTextMSG.setText(data.getStringExtra(SecondActivity.EXTRA_REPLY));
         }
     }
