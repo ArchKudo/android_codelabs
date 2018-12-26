@@ -1,7 +1,14 @@
 <resources>
-    <string name="app_name">Hello TwoActivities</string>
+    <string name="app_name">Hello ImplicitIntents</string>
     <string name="send_btn">send</string>
     <string name="message_received">Received Message:</string>
     <string name="enter_text">Enter your message here</string>
     <string name="reply_btn">reply</string>
+    <string name="share">Share:</string>
+    <string name="eg_url">e.g. http://google.com</string>
+    <string name="open_website">open website</string>
+    <string name="eg_loc">e.g. Pyramid of Giza</string>
+    <string name="open_location">open location</string>
+    <string name="eg_text">e.g. Some Text</string>
+    <string name="share_this_text">share this text</string>
 </resources>
