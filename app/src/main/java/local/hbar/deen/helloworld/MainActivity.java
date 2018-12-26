@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void launchSecondActivity(View view) {
+    public void sendMSG(View view) {
         Intent intent = new Intent(this, SecondActivity.class);
         String msg = mSend.getText().toString();
         intent.putExtra(EXTRA_SEND, msg);

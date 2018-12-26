@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:onClick="launchSecondActivity"
+        android:onClick="sendMSG"
         android:text="@string/send_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
