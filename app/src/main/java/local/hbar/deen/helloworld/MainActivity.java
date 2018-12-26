@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         String url = mWebsite.getText().toString();
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        if(intent.resolveActivity(getPackageManager())!= null) {
+        if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         } else {
             Log.d(LOG_TAG, "Can\'t handle website uri: " + uri);
