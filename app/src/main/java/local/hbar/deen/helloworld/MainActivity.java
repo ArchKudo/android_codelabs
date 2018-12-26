@@ -1,99 +1,25 @@
 package local.hbar.deen.helloworld;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int TEXT_REQUEST = 1;
-    public static final String EXTRA_SEND = "local.deen.hbar.helloworld.EXTRA.send";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private EditText mSend;
-    private TextView mTextHeader;
-    private TextView mTextMSG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mSend = findViewById(R.id.editText_main);
-        mTextHeader = findViewById(R.id.text_header);
-        mTextMSG = findViewById(R.id.text_msg);
-
-
-        if (savedInstanceState != null) {
-            if (savedInstanceState.getBoolean("msg_visible")) {
-                mTextHeader.setVisibility(View.VISIBLE);
-                mTextMSG.setText(savedInstanceState.getString("msg_text"));
-            }
-        }
-
-        // Logging
-        Log.d(LOG_TAG, "Hello, Two Activities!");
-
-        Log.d(LOG_TAG, "onCreate()");
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(LOG_TAG, "onStart()");
+
+    public void launchBrowser(View view) {
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(LOG_TAG, "onRestart()");
+    public void launchMap(View view) {
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(LOG_TAG, "onResume()");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(LOG_TAG, "onPause()");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(LOG_TAG, "onDestroy()");
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mTextHeader.getVisibility() == View.VISIBLE) {
-            outState.putBoolean("msg_visible", true);
-            outState.putString("msg_text", mTextMSG.getText().toString());
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // TODO: Check for null / Why isn't hasExtra enough?
-        if (requestCode == TEXT_REQUEST && resultCode == RESULT_OK && (data.hasExtra(SecondActivity.EXTRA_REPLY))) {
-            mTextHeader.setVisibility(View.VISIBLE);
-            mTextMSG.setText(data.getStringExtra(SecondActivity.EXTRA_REPLY));
-        }
-    }
-
-    public void sendMSG(View view) {
-        Intent intent = new Intent(this, SecondActivity.class);
-        String msg = mSend.getText().toString();
-        intent.putExtra(EXTRA_SEND, msg);
-        startActivityForResult(intent, TEXT_REQUEST);
+    public void shareText(View view) {
     }
 }
