@@ -22,9 +22,6 @@ package local.hbar.deen.helloworld;
  */
 public class Calculator {
 
-    // Available operations
-    public enum Operator {ADD, SUB, DIV, MUL}
-
     /**
      * Addition operation
      */
@@ -51,5 +48,10 @@ public class Calculator {
      */
     public double mul(double firstOperand, double secondOperand) {
         return firstOperand * secondOperand;
+    }
+
+    // Available operations
+    public enum Operator {
+        ADD, SUB, DIV, MUL
     }
 }

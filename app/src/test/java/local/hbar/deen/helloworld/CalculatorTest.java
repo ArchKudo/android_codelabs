@@ -17,8 +17,6 @@ package local.hbar.deen.helloworld;
  */
 
 
-import android.test.suitebuilder.annotation.SmallTest;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,13 +24,13 @@ import org.junit.runners.JUnit4;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.closeTo;
 import static org.junit.Assert.assertThat;
 
 /**
  * JUnit4 unit tests for the calculator logic. These are local unit tests; no device needed
  */
 @RunWith(JUnit4.class)
-@SmallTest
 public class CalculatorTest {
 
     private Calculator mCalculator;
@@ -54,6 +52,64 @@ public class CalculatorTest {
         assertThat(resultAdd, is(equalTo(2d)));
     }
 
+    @Test
+    public void addTwoNumbersNegative() {
+        double resultAdd = mCalculator.add(-1d, -1d);
+        assertThat(resultAdd, is(equalTo(-2d)));
+    }
+
+    @Test
+    public void addTwoNumbersFloating() {
+        double resultAdd = mCalculator.add(1.22222222222222222d, 2.811111111111111111d);
+        assertThat(resultAdd, is(closeTo(4.0d, 0.5d)));
+    }
+
+    @Test
+    public void addTwoLargeNumbers() {
+        double resultAdd = mCalculator.add((double) (Integer.MAX_VALUE), (double) (Integer.MAX_VALUE));
+        assertThat(resultAdd, is(equalTo((double) (Integer.MAX_VALUE) + (double) (Integer.MAX_VALUE))));
+    }
+
+    @Test
+    public void addNumberWithZero() {
+        double resultAdd = mCalculator.add(1d, 0d);
+        assertThat(resultAdd, is(equalTo(1d)));
+    }
+
+    @Test
+    public void addNumberWithInf() {
+        double resultAdd = mCalculator.add(1d, Double.POSITIVE_INFINITY);
+        assertThat(resultAdd, is(equalTo(Double.POSITIVE_INFINITY)));
+    }
 
 
+    @Test
+    public void subTwoNumbers() {
+        double resultSub = mCalculator.sub(1d, 1d);
+        assertThat(resultSub, is(equalTo(0d)));
+    }
+
+    @Test
+    public void subWorksWithNegativeResult() {
+        double resultSub = mCalculator.sub(1d, 17d);
+        assertThat(resultSub, is(equalTo(-16d)));
+    }
+
+    @Test
+    public void mulTwoNumbers() {
+        double resultMul = mCalculator.mul(32d, 2d);
+        assertThat(resultMul, is(equalTo(64d)));
+    }
+
+    @Test
+    public void divTwoNumbers() {
+        double resultDiv = mCalculator.div(32d, 2d);
+        assertThat(resultDiv, is(equalTo(16d)));
+    }
+
+    @Test
+    public void divTwoNumbersZero() {
+        double resultDiv = mCalculator.div(32d, 0);
+        assertThat(resultDiv, is(equalTo(Double.POSITIVE_INFINITY)));
+    }
 }
