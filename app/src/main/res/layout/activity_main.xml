@@ -1,58 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+
+    android:paddingStart="8dp"
+    tools:layout_editor_absoluteY="81dp">
 
 
     <TextView
         android:id="@+id/donut_text"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:drawableStart="@drawable/donut_circle"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:onClick="showDesc"
         android:tag="1"
         android:text="@string/donut_desc"
-        app:layout_constraintBottom_toTopOf="@+id/froyo_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/froyo_text"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:drawableStart="@drawable/froyo_circle"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:onClick="showDesc"
         android:tag="2"
         android:text="@string/froyo_desc"
-        app:layout_constraintBottom_toTopOf="@+id/ics_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/donut_text" />
 
     <TextView
         android:id="@+id/ics_text"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:drawableStart="@drawable/icecream_circle"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:onClick="showDesc"
         android:tag="3"
         android:text="@string/ics_desc"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/froyo_text" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:scaleType="centerCrop"
+        android:src="@android:drawable/ic_menu_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

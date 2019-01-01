@@ -1,16 +1,18 @@
 package local.hbar.deen.helloworld;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.Arrays;
 
 public class MainActivity extends Activity implements View.OnLongClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private SparseIntArray orderList = new SparseIntArray(3);
+    private static int[] orderCount = new int[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,14 @@ public class MainActivity extends Activity implements View.OnLongClickListener {
         findViewById(R.id.donut_text).setOnLongClickListener(this);
         findViewById(R.id.froyo_text).setOnLongClickListener(this);
         findViewById(R.id.ics_text).setOnLongClickListener(this);
+        findViewById(R.id.fab_cart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OrderActivity.class);
+                intent.putExtra("orderCount", orderCount);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -26,9 +36,8 @@ public class MainActivity extends Activity implements View.OnLongClickListener {
         v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                final Integer key = Integer.parseInt(v.getTag().toString());
-                orderList.put(key, orderList.get(key, 0) + 1);
-                Log.d(LOG_TAG, orderList.toString());
+                orderCount[Integer.parseInt(v.getTag().toString()) - 1] += 1;
+                Log.d(LOG_TAG, Arrays.toString(orderCount));
                 return true;
             }
         });
