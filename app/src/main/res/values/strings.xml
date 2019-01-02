@@ -11,6 +11,12 @@
         <item name="ics">Ice-cream Sandwich!</item>
     </string-array>
 
+    <string-array name="labels_array">
+        <item>Home</item>
+        <item>Work</item>
+        <item>Other</item>
+    </string-array>
+
     <string name="img_desc">An Image</string>
     <string name="donut_desc">Sticky bread with something on the inside</string>
     <string name="froyo_desc">Super pricey yogurt</string>
