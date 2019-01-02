@@ -21,5 +21,18 @@
     <string name="donut_desc">Sticky bread with something on the inside</string>
     <string name="froyo_desc">Super pricey yogurt</string>
     <string name="ics_desc">Doesn\'t taste as good as it looks/sounds</string>
+    <string name="header_text">Your Order</string>
+    <string name="billing_information">Billing Information</string>
+    <string name="name">Name</string>
+    <string name="john_doe">John Doe</string>
+    <string name="number">Number</string>
+    <string name="_1234_567_890">+1234 567 890</string>
+    <string name="address">Address</string>
+    <string name="_1_111_acm_us">1/111, ACM, US.</string>
+    <string name="email">Email</string>
+    <string name="jon_doe_org">jon@doe.org</string>
+    <string name="choose_a_delivery_method">Choose a delivery method</string>
+    <string name="next_day_delivery">Next Day Delivery</string>
+    <string name="standard_delivery">Standard Delivery</string>
 
 </resources>
