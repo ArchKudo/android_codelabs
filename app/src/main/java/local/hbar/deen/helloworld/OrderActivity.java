@@ -1,7 +1,7 @@
 package local.hbar.deen.helloworld;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-public class OrderActivity extends Activity implements AdapterView.OnItemSelectedListener {
+public class OrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

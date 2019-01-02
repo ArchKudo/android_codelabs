@@ -1,15 +1,15 @@
 package local.hbar.deen.helloworld;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.Arrays;
 
-public class MainActivity extends Activity implements View.OnLongClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnLongClickListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static int[] orderCount = new int[3];
