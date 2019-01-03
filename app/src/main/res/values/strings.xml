@@ -34,5 +34,6 @@
     <string name="choose_a_delivery_method">Choose a delivery method</string>
     <string name="next_day_delivery">Next Day Delivery</string>
     <string name="standard_delivery">Standard Delivery</string>
+    <string name="select_sweets">Select Sweets</string>
 
 </resources>
