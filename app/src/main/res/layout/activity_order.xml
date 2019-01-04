@@ -67,11 +67,13 @@
                 android:text="@string/number" />
 
             <EditText
+                android:id="@+id/phone_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/_1234_567_890"
+                android:imeOptions="actionSend"
                 android:importantForAutofill="no"
-                android:inputType="number" />
+                android:inputType="phone" />
         </LinearLayout>
 
         <LinearLayout
