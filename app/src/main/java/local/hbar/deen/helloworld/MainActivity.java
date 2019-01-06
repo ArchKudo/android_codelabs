@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,9 +24,13 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
         setContentView(R.layout.activity_main);
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
         findViewById(R.id.donut_text).setOnLongClickListener(this);
         findViewById(R.id.froyo_text).setOnLongClickListener(this);
         findViewById(R.id.ics_text).setOnLongClickListener(this);
+
+        registerForContextMenu(findViewById(R.id.heading_text));
+
         findViewById(R.id.fab_cart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +71,19 @@ public class MainActivity extends AppCompatActivity implements View.OnLongClickL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
+        Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.menu_context, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        super.onContextItemSelected(item);
         Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
         return true;
     }
