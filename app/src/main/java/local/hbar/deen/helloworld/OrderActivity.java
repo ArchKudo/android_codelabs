@@ -1,8 +1,10 @@
 package local.hbar.deen.helloworld;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -70,4 +72,34 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
+
+    public void showAlert(View view) {
+        (new AlertDialog.Builder(OrderActivity.this))
+                .setTitle("Alert").setMessage("Are you sure you want to delete this order?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "Order Deleted", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), "Cancelled deleting order", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+
+    public void showCalendar(View view) {
+        new DatePickerFragment().show(getSupportFragmentManager(), "datePicker");
+
+    }
+
+    public void processDatePickerResult(int year, int month, int dayOfMonth) {
+        Toast.makeText(this, (Integer.toString(year) +
+                "/" + Integer.toString(month+1) +
+                "/" + Integer.toString(dayOfMonth)), Toast.LENGTH_SHORT).show();
+    }
 }
+
