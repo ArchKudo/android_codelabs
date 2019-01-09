@@ -17,7 +17,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         switch(i) {
             case 0: return new ProductsFragment();
-            case 1: return new SnacksFragment();
+            case 1: return new ProductsFragment();
             default: return null;
         }
     }
