@@ -33,7 +33,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                 orderCount[1],
                 orderCount[2]));
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.labels_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.contact_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ((Spinner) findViewById(R.id.email_spinner)).setAdapter(adapter);
 

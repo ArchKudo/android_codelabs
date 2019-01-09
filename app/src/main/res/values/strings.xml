@@ -11,10 +11,15 @@
         <item name="ics">Ice-cream Sandwich!</item>
     </string-array>
 
-    <string-array name="labels_array">
+    <string-array name="contact_type">
         <item>Home</item>
         <item>Work</item>
         <item>Other</item>
+    </string-array>
+
+    <string-array name="tab_names">
+        <item>Sweets</item>
+        <item>Snacks</item>
     </string-array>
 
     <string name="img_desc">An Image</string>
@@ -35,5 +40,6 @@
     <string name="next_day_delivery">Next Day Delivery</string>
     <string name="standard_delivery">Standard Delivery</string>
     <string name="select_sweets">Select Sweets</string>
+
 
 </resources>
