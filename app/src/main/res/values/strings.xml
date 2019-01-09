@@ -11,6 +11,12 @@
         <item name="ics">Ice-cream Sandwich!</item>
     </string-array>
 
+    <string-array name="snacks">
+        <item name="fries">Fries!</item>
+        <item name="coffee">Coffee!</item>
+        <item name="cookies">Cookies</item>
+    </string-array>
+
     <string-array name="contact_type">
         <item>Home</item>
         <item>Work</item>
