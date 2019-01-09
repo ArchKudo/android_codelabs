@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SweetsFragment extends Fragment {
+public class ProductsFragment extends Fragment {
 
 
-    public SweetsFragment() {
+    public ProductsFragment() {
         // Required empty public constructor
     }
+    
 
 
     @Override
