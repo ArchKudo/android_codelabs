@@ -1,5 +1,6 @@
 package local.hbar.deen.helloworld;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,11 +16,20 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        switch(i) {
-            case 0: return new ProductsFragment();
-            case 1: return new ProductsFragment();
-            default: return null;
+        Bundle bundle = new Bundle();
+
+        // TODO: Remove switch case
+        switch (i) {
+            case 0:
+                bundle.putString("items", "sweets");
+                break;
+            case 1:
+                bundle.putString("items", "snacks");
+                break;
         }
+        ProductsFragment productsFragment = new ProductsFragment();
+        productsFragment.setArguments(bundle);
+        return productsFragment;
     }
 
     @Override

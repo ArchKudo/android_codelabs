@@ -28,10 +28,12 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         int[] orderCount = getIntent().getIntArrayExtra("orderCount");
-        ((TextView) findViewById(R.id.content_text)).setText(String.format(Locale.getDefault(), "Donuts: %d\nFroyo: %d\nIce-cream Sandwich: %d\n",
-                orderCount[0],
-                orderCount[1],
-                orderCount[2]));
+        String[] products = getIntent().getStringArrayExtra("products");
+
+        for (int i = 0; i < orderCount.length; i++) {
+            ((TextView) findViewById(R.id.content_text))
+                    .append(String.format(Locale.getDefault(), "%s: %d\n", products[i], orderCount[i]));
+        }
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.contact_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -98,7 +100,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
 
     public void processDatePickerResult(int year, int month, int dayOfMonth) {
         Toast.makeText(this, (Integer.toString(year) +
-                "/" + Integer.toString(month+1) +
+                "/" + Integer.toString(month + 1) +
                 "/" + Integer.toString(dayOfMonth)), Toast.LENGTH_SHORT).show();
     }
 }

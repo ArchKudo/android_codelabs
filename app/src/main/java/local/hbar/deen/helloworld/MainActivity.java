@@ -1,8 +1,12 @@
 package local.hbar.deen.helloworld;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
@@ -13,10 +17,10 @@ import android.widget.Toast;
 
 //public class MainActivity extends AppCompatActivity implements View.OnLongClickListener {
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private static int[] orderCount = new int[3];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +33,29 @@ public class MainActivity extends AppCompatActivity {
 //        findViewById(R.id.froyo_text).setOnLongClickListener(this);
 //        findViewById(R.id.ics_text).setOnLongClickListener(this);
 
-//        registerForContextMenu(findViewById(R.id.heading_text));
 
-//        findViewById(R.id.fab_cart).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, OrderActivity.class);
-//                intent.putExtra("orderCount", orderCount);
-//                startActivity(intent);
-//            }
-//        });
+
+
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                (Toolbar) findViewById(R.id.toolbar),
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+
+        if (drawerLayout != null) {
+            drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        }
+
+        actionBarDrawerToggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
 
         String[] tabNames = getResources().getStringArray(R.array.tab_names);
 
@@ -121,4 +138,61 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
         return true;
     }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+            case R.id.nav_camera:
+                // Handle the camera import action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_camera));
+                return true;
+            case R.id.nav_gallery:
+                // Handle the gallery action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_gallery));
+                return true;
+            case R.id.nav_slideshow:
+                // Handle the slideshow action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_slideshow));
+                return true;
+            case R.id.nav_manage:
+                // Handle the tools action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_tools));
+                return true;
+            case R.id.nav_share:
+                // Handle the share action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_share));
+                return true;
+            case R.id.nav_send:
+                // Handle the send action (for now display a toast).
+                drawer.closeDrawer(GravityCompat.START);
+                displayToast(getString(R.string.chose_send));
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        if (drawerLayout != null) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }
+    }
+
+    public void displayToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
 }

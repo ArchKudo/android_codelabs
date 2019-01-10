@@ -6,58 +6,56 @@
     android:orientation="vertical"
     tools:context=".ProductsFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <LinearLayout
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/donut_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/donut_circle"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:tag="1"
-                android:text="@string/donut_desc" />
-
-            <TextView
-                android:id="@+id/froyo_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/froyo_circle"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:tag="2"
-                android:text="@string/froyo_desc" />
-
-            <TextView
-                android:id="@+id/ics_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/icecream_circle"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:tag="3"
-                android:text="@string/ics_desc" />
+            android:layout_height="wrap_content">
 
 
-        </LinearLayout>
 
-    </ScrollView>
+        </android.support.v7.widget.RecyclerView>
+
+
+
+            <!--<TextView-->
+                <!--android:id="@+id/donut_text"-->
+                <!--android:drawableStart="@drawable/donut_circle"-->
+                <!--android:tag="1"-->
+                <!--android:text="@string/donut_desc"-->
+                <!--style="@style/item_text" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/froyo_text"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:layout_marginEnd="8dp"-->
+                <!--android:drawableStart="@drawable/froyo_circle"-->
+                <!--android:drawablePadding="8dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:tag="2"-->
+                <!--android:text="@string/froyo_desc" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/ics_text"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:layout_marginEnd="8dp"-->
+                <!--android:drawableStart="@drawable/ics_circle"-->
+                <!--android:drawablePadding="8dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:tag="3"-->
+                <!--android:text="@string/ics_desc" />-->
+
+
+        <!--</LinearLayout>-->
+
+    <!--</ScrollView>-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_cart"

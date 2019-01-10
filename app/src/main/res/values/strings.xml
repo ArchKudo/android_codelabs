@@ -6,15 +6,15 @@
     <string name="app_name">Hello, ClickableImages</string>
 
     <string-array name="sweets">
-        <item name="donut">Donuts!</item>
-        <item name="froyo">Froyo!</item>
-        <item name="ics">Ice-cream Sandwich!</item>
+        <item>donut</item>
+        <item>froyo</item>
+        <item>ics</item>
     </string-array>
 
     <string-array name="snacks">
-        <item name="fries">Fries!</item>
-        <item name="coffee">Coffee!</item>
-        <item name="cookies">Cookies</item>
+        <item>fries</item>
+        <item>coffee_can</item>
+        <item>oreo</item>
     </string-array>
 
     <string-array name="contact_type">
@@ -29,9 +29,14 @@
     </string-array>
 
     <string name="img_desc">An Image</string>
+
     <string name="donut_desc">Sticky bread with something on the inside</string>
     <string name="froyo_desc">Super pricey yogurt</string>
     <string name="ics_desc">Doesn\'t taste as good as it looks/sounds</string>
+    <string name="coffee_can_desc">It\'s coffee in a can</string>
+    <string name="fries_desc">Always a meal for 4</string>
+    <string name="oreo_desc">Only strawberry flavour available</string>
+
     <string name="header_text">Your Order</string>
     <string name="billing_information">Billing Information</string>
     <string name="name">Name</string>
@@ -47,5 +52,22 @@
     <string name="standard_delivery">Standard Delivery</string>
     <string name="select_sweets">Select Sweets</string>
 
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="import_camera">Import</string>
+    <string name="gallery">Gallery</string>
+    <string name="slideshow">Slideshow</string>
+    <string name="tools">Tools</string>
+    <string name="communicate">Communicate</string>
+    <string name="share">Share</string>
+    <string name="send">Send</string>
+    <string name="chose_camera">You chose Camera Import.</string>
+    <string name="chose_gallery">You chose the Gallery.</string>
+    <string name="chose_slideshow">You chose the Slideshow.</string>
+    <string name="chose_tools">You chose Tools.</string>
+    <string name="chose_share">You chose Share.</string>
+    <string name="chose_send">You chose Send.</string>
 
 </resources>
