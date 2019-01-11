@@ -1,6 +1,7 @@
 package local.hbar.deen.helloworld;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -8,10 +9,12 @@ import android.widget.TextView;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
 
-    private String[] products;
+    private String[] productsText;
+    private int[] productsDrawables;
 
-    public ProductListAdapter(String[] products) {
-        this.products = products;
+    public ProductListAdapter(String[] productsText, int[] productsDrawables) {
+        this.productsText = productsText;
+        this.productsDrawables = productsDrawables;
     }
 
     @NonNull
@@ -27,13 +30,17 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ProductListAdapter.ProductViewHolder productViewHolder, int i) {
-        productViewHolder.textView.setText(products[i]);
-
+        productViewHolder.textView.setText(productsText[i]);
+        productViewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(
+                ContextCompat.getDrawable(productViewHolder.textView.getContext(), productsDrawables[i]),
+                null,
+                null,
+                null);
     }
 
     @Override
     public int getItemCount() {
-        return products.length;
+        return productsText.length;
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder {

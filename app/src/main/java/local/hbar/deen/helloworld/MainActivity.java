@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,57 +26,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        // Setup Toolbar
+        setSupportActionBar(findViewById(R.id.toolbar));
 
-//        findViewById(R.id.donut_text).setOnLongClickListener(this);
-//        findViewById(R.id.froyo_text).setOnLongClickListener(this);
-//        findViewById(R.id.ics_text).setOnLongClickListener(this);
-
-
-
-
-
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                (Toolbar) findViewById(R.id.toolbar),
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-
-        if (drawerLayout != null) {
-            drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        }
-
-        actionBarDrawerToggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-
-        if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(this);
-        }
-
+        // Setup Tabs
         String[] tabNames = getResources().getStringArray(R.array.tab_names);
-
         TabLayout tabLayout = findViewById(R.id.tab_layout);
-
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
         for (String tabName : tabNames) {
             tabLayout.addTab(tabLayout.newTab().setText(tabName));
         }
 
+        // Setup Tab content
+        final ViewPager productsViewPager = findViewById(R.id.products_view_pager);
+        final ProductsFragmentAdapter adapter = new ProductsFragmentAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        productsViewPager.setAdapter(adapter);
 
-        final ViewPager viewPager = findViewById(R.id.view_pager);
+        productsViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                productsViewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -90,6 +60,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
+        // Setup App Drawer
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                findViewById(R.id.drawer_layout),
+                findViewById(R.id.toolbar),
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        ((DrawerLayout) findViewById(R.id.drawer_layout)).addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        ((NavigationView) findViewById(R.id.navigation_view)).setNavigationItemSelectedListener(this);
     }
 
 //    @Override
@@ -141,37 +122,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        // TODO: Simplify switch
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_camera:
                 // Handle the camera import action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 displayToast(getString(R.string.chose_camera));
                 return true;
             case R.id.nav_gallery:
                 // Handle the gallery action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 displayToast(getString(R.string.chose_gallery));
                 return true;
             case R.id.nav_slideshow:
                 // Handle the slideshow action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 displayToast(getString(R.string.chose_slideshow));
                 return true;
             case R.id.nav_manage:
                 // Handle the tools action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 displayToast(getString(R.string.chose_tools));
                 return true;
             case R.id.nav_share:
                 // Handle the share action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 displayToast(getString(R.string.chose_share));
                 return true;
             case R.id.nav_send:
                 // Handle the send action (for now display a toast).
-                drawer.closeDrawer(GravityCompat.START);
+                drawerLayout.closeDrawer(GravityCompat.START);
                 displayToast(getString(R.string.chose_send));
                 return true;
             default:
