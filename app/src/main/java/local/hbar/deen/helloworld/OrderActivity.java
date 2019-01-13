@@ -35,32 +35,38 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
                     .append(String.format(Locale.getDefault(), "%s: %d\n", products[i], orderCount[i]));
         }
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.contact_type, android.R.layout.simple_spinner_item);
+        // Create an adapter for drop-down menu from string-array resource
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.contact_type,
+                android.R.layout.simple_spinner_item);
+
+        // Set look of drop-down
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ((Spinner) findViewById(R.id.email_spinner)).setAdapter(adapter);
+        Spinner spinner = findViewById(R.id.email_spinner);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
 
         ((EditText) findViewById(R.id.phone_text)).setOnEditorActionListener(
-                new TextView.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_ACTION_SEND) {
-                            String phoneNo = null;
-                            EditText editText = findViewById(R.id.phone_text);
-                            if (editText != null) {
-                                phoneNo = "tel:" + editText.getText().toString();
+                (TextView v, int actionId, KeyEvent event) -> {
+                    if (actionId == EditorInfo.IME_ACTION_SEND) {
+                        String phoneNo = null;
+                        EditText editText = findViewById(R.id.phone_text);
+                        if (editText != null) {
+                            phoneNo = "tel:" + editText.getText().toString();
 
-                            }
-                            Intent intent = new Intent(Intent.ACTION_DIAL);
-                            intent.setData(Uri.parse(phoneNo));
-                            if (intent.resolveActivity(getPackageManager()) != null) {
-                                startActivity(intent);
-                            } else {
-                                Log.w(LOG_TAG, "Can't handle implicit intent for phone no:" + phoneNo);
-                            }
-                            return true;
                         }
-                        return false;
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse(phoneNo));
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        } else {
+                            Log.w(LOG_TAG, "Can't handle implicit intent for phone no:" + phoneNo);
+                        }
+                        return true;
                     }
+                    return false;
+
                 }
         );
     }
@@ -78,18 +84,10 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
     public void showAlert(View view) {
         (new AlertDialog.Builder(OrderActivity.this))
                 .setTitle("Alert").setMessage("Are you sure you want to delete this order?")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(), "Order Deleted", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(), "Cancelled deleting order", Toast.LENGTH_SHORT).show();
-                    }
-                })
+                .setPositiveButton("OK", (DialogInterface dialog, int which) ->
+                        Toast.makeText(getApplicationContext(), "Order Deleted", Toast.LENGTH_SHORT).show())
+                .setNegativeButton("CANCEL", (DialogInterface dialog, int which) ->
+                        Toast.makeText(getApplicationContext(), "Cancelled deleting order", Toast.LENGTH_SHORT).show())
                 .show();
     }
 
