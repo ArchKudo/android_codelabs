@@ -9,7 +9,7 @@ public class ProductsFragmentAdapter extends FragmentStatePagerAdapter {
 
     private String[] tabNames;
 
-    public ProductsFragmentAdapter(FragmentManager fm, String[] tabNames) {
+    ProductsFragmentAdapter(FragmentManager fm, String[] tabNames) {
         super(fm);
         this.tabNames = tabNames;
     }

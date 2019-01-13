@@ -14,12 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-//public class MainActivity extends AppCompatActivity implements View.OnLongClickListener {
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,26 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ((NavigationView) findViewById(R.id.navigation_view)).setNavigationItemSelectedListener(this);
     }
 
-//    @Override
-//    public boolean onLongClick(View v) {
-//        v.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                orderCount[Integer.parseInt(v.getTag().toString()) - 1] += 1;
-//                Log.d(LOG_TAG, Arrays.toString(orderCount));
-//                return true;
-//            }
-//        });
-//        return true;
-//    }
-
-//    public void showDesc(View view) {
-//        final Integer tag = Integer.parseInt(view.getTag().toString());
-//        String[] sweets = getResources().getStringArray(R.array.sweets);
-//        Toast.makeText(this, "Long press to add " + sweets[tag - 1], Toast.LENGTH_SHORT).show();
-//
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -124,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
 
         // TODO: Simplify switch
+        // TODO: Actually add some functionality (like theme switcher?)
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {

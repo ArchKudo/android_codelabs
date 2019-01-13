@@ -3,12 +3,16 @@ package local.hbar.deen.helloworld;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.Objects;
 
 
 public class ProductsFragment extends Fragment {
@@ -19,9 +23,16 @@ public class ProductsFragment extends Fragment {
     }
 
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@Nullable LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        final int[] orderCount = new int[3];
+        final String[] productNames;
+        String[] productsText = new String[3];
+        int[] productsDrawableId = new int[3];
+        // TODO: Handle NPE
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products, container, false);
 
@@ -31,13 +42,10 @@ public class ProductsFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         String productsType = getArguments().getString("items");
-        final int[] orderCount = new int[3];
-        final String[] productNames;
-        String[] productsText = new String[3];
-        int[] productsDrawableId = new int[3];
+
         String packageName = getActivity().getPackageName();
 
-        if (productsType.equals("sweets")) {
+        if (Objects.equals(productsType, "sweets")) {
             productNames = getResources().getStringArray(R.array.sweets);
         } else {
             productNames = getResources().getStringArray(R.array.snacks);
@@ -49,18 +57,16 @@ public class ProductsFragment extends Fragment {
         }
 
 
-        ProductListAdapter mAdapter = new ProductListAdapter(productsText, productsDrawableId);
+        ProductsRecyclerAdapter mAdapter = new ProductsRecyclerAdapter(productsText, productsDrawableId);
         mRecyclerView.setAdapter(mAdapter);
 
-        view.findViewById(R.id.fab_cart).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), OrderActivity.class);
-                intent.putExtra("orderCount", orderCount);
-                intent.putExtra("productsText", productNames);
-                startActivity(intent);
-            }
+        view.findViewById(R.id.fab_cart).setOnClickListener((View) -> {
+            Intent intent = new Intent(getActivity(), OrderActivity.class);
+            intent.putExtra("orderCount", orderCount);
+            intent.putExtra("productsText", productNames);
+            startActivity(intent);
         });
+
 
         return view;
     }

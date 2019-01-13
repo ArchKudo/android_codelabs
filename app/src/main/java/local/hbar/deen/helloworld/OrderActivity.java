@@ -28,7 +28,7 @@ public class OrderActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         int[] orderCount = getIntent().getIntArrayExtra("orderCount");
-        String[] products = getIntent().getStringArrayExtra("products");
+        String[] products = getIntent().getStringArrayExtra("productsText");
 
         for (int i = 0; i < orderCount.length; i++) {
             ((TextView) findViewById(R.id.content_text))
