@@ -68,5 +68,6 @@
     <string name="chose_tools">You chose Tools.</string>
     <string name="chose_share">You chose Share.</string>
     <string name="chose_send">You chose Send.</string>
+    <string name="gift_wrap">Gift Wrap</string>
 
 </resources>
