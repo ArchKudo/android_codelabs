@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Setup Tab content
         final ViewPager productsViewPager = findViewById(R.id.products_view_pager);
-        final ProductsFragmentAdapter adapter = new ProductsFragmentAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        final ProductsFragmentAdapter adapter = new ProductsFragmentAdapter(getSupportFragmentManager(), tabNames);
         productsViewPager.setAdapter(adapter);
 
         productsViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

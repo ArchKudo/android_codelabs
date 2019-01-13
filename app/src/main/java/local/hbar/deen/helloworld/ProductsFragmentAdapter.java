@@ -7,26 +7,17 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class ProductsFragmentAdapter extends FragmentStatePagerAdapter {
 
-    int mNumOfTabs;
+    private String[] tabNames;
 
-    public ProductsFragmentAdapter(FragmentManager fm, int numOfTabs) {
+    public ProductsFragmentAdapter(FragmentManager fm, String[] tabNames) {
         super(fm);
-        this.mNumOfTabs = numOfTabs;
+        this.tabNames = tabNames;
     }
 
     @Override
     public Fragment getItem(int i) {
         Bundle bundle = new Bundle();
-
-        // TODO: Remove switch case
-        switch (i) {
-            case 0:
-                bundle.putString("items", "sweets");
-                break;
-            case 1:
-                bundle.putString("items", "snacks");
-                break;
-        }
+        bundle.putString("items", tabNames[i]);
         ProductsFragment productsFragment = new ProductsFragment();
         productsFragment.setArguments(bundle);
         return productsFragment;
@@ -34,6 +25,6 @@ public class ProductsFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return mNumOfTabs;
+        return tabNames.length;
     }
 }

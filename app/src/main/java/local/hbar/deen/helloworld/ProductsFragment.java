@@ -2,12 +2,10 @@ package local.hbar.deen.helloworld;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +37,7 @@ public class ProductsFragment extends Fragment {
         int[] productsDrawableId = new int[3];
         String packageName = getActivity().getPackageName();
 
-        if (productsType == "sweets") {
+        if (productsType.equals("sweets")) {
             productNames = getResources().getStringArray(R.array.sweets);
         } else {
             productNames = getResources().getStringArray(R.array.snacks);
