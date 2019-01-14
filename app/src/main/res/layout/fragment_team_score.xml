@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/primaryTextColor"
         android:text="@string/default_team"
         android:textSize="64sp"
         android:textStyle="bold" />
