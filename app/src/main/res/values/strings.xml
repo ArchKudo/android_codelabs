@@ -3,5 +3,13 @@
 
 <resources>
     <!-- Title of app -->
-    <string name="app_name">Hello, ClickableImages</string>
+    <string name="app_name">Hello, Numbered buttons</string>
+    <string name="initial_score">0</string>
+
+    <string-array name="teams">
+        <item>Real Madrid</item>
+        <item>Manchester City</item>
+    </string-array>
+
+    <string name="default_team">Team 1</string>
 </resources>
