@@ -11,12 +11,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.parent_layout,
-                        createFragmentWithArguments(StringBundle("teamName", "Team 1")))
-                .add(R.id.parent_layout,
-                        createFragmentWithArguments(StringBundle("teamName", "Team 2")))
-                .commit();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.parent_layout,
+                            createFragmentWithArguments(StringBundle("teamName", "Team 1")))
+                    .add(R.id.parent_layout,
+                            createFragmentWithArguments(StringBundle("teamName", "Team 2")))
+                    .commit();
+        }
+
+
 
 
     }
