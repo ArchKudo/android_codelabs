@@ -20,6 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:freezesText="true"
         android:text="@string/initial_score"
         android:textColor="@color/secondaryDarkColor"
         android:textSize="64sp" />
