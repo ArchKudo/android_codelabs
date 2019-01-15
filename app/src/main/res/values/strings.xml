@@ -6,10 +6,8 @@
     <string name="app_name">Hello, Numbered buttons</string>
     <string name="initial_score">0</string>
 
-    <string-array name="teams">
-        <item>Real Madrid</item>
-        <item>Manchester City</item>
-    </string-array>
+    <string name="night">Night Theme</string>
+    <string name="day">Day Theme</string>
 
     <string name="default_team">Team 1</string>
 </resources>
