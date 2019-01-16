@@ -1,43 +1,57 @@
 package local.hbar.deen.helloworld;
 
+import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecyclerAdapter.ProductsViewHolder> {
 
-    private String[] productsText;
-    private int[] productsDrawables;
+    private String[] productsName;
+    private String[] productsDesc;
+    private TypedArray productsDrawables;
 
-    ProductsRecyclerAdapter(String[] productsText, int[] productsDrawables) {
-        this.productsText = productsText;
+    ProductsRecyclerAdapter(String[] productsName, String[] productsDesc, TypedArray productsDrawables) {
+        this.productsName = productsName;
+        this.productsDesc = productsDesc;
         this.productsDrawables = productsDrawables;
     }
 
     @NonNull
     @Override
     public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        TextView tv = (TextView) LayoutInflater
+        CardView cardView = (CardView) LayoutInflater
                 .from(viewGroup.getContext())
-                .inflate(R.layout.item_text, viewGroup, false);
+                .inflate(R.layout.item_card, viewGroup, false);
 
-        return new ProductsViewHolder(tv);
+//        TextView tv = (TextView) LayoutInflater
+//                .from(viewGroup.getContext())
+//                .inflate(R.layout.item_text, viewGroup, false);
+
+        return new ProductsViewHolder(cardView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductsViewHolder productsViewHolder, int i) {
-        productsViewHolder.textView.setText(productsText[i]);
-        productsViewHolder.textView.setCompoundDrawablesWithIntrinsicBounds(
-                ContextCompat.getDrawable(productsViewHolder.textView.getContext(), productsDrawables[i]),
+        TextView textView = (TextView) productsViewHolder.cardView.getChildAt(0);
+        textView.setText(Html.fromHtml(String.format(Locale.getDefault(), "<b>%s</b>", productsName[i]), Html.FROM_HTML_MODE_LEGACY));
+        textView.append("\n");
+        textView.append(productsDesc[i]);
+        textView.setCompoundDrawablesWithIntrinsicBounds(
+                ContextCompat.getDrawable(productsViewHolder.cardView.getContext(), productsDrawables.getResourceId(i, 0)),
                 null,
                 null,
                 null);
-        productsViewHolder.textView.setOnClickListener((view) ->
-                Toast.makeText(productsViewHolder.textView.getContext(),
+        textView.setOnClickListener((view) ->
+                Toast.makeText(productsViewHolder.cardView.getContext(),
                         "Long Press to add!",
                         Toast.LENGTH_SHORT).show());
 
@@ -64,15 +78,15 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 
     @Override
     public int getItemCount() {
-        return productsText.length;
+        return productsName.length;
     }
 
     class ProductsViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        CardView cardView;
 
-        ProductsViewHolder(TextView textView) {
-            super(textView);
-            this.textView = textView;
+        ProductsViewHolder(CardView cardView) {
+            super(cardView);
+            this.cardView = cardView;
         }
     }
 }

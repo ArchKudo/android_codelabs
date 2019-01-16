@@ -28,13 +28,41 @@
         <item>snacks</item>
     </string-array>
 
+    <array name="sweets_images">
+        <item>@drawable/donut_circle</item>
+        <item>@drawable/froyo_circle</item>
+        <item>@drawable/ics_circle</item>
+    </array>
 
-    <string name="donut_desc">Sticky bread with something on the inside</string>
-    <string name="froyo_desc">Super pricey yogurt</string>
-    <string name="ics_desc">Doesn\'t taste as good as it looks/sounds</string>
-    <string name="coffee_can_desc">It\'s coffee in a can</string>
-    <string name="fries_desc">Always a meal for 4</string>
-    <string name="oreo_desc">Only strawberry flavour available</string>
+    <array name="snacks_images">
+        <item>@drawable/fries_circle</item>
+        <item>@drawable/coffee_can_circle</item>
+        <item>@drawable/oreo_circle</item>
+    </array>
+
+    <string-array name="sweets_header">
+        <item>Donuts</item>
+        <item>Froyo</item>
+        <item>Ice-cream Sandwich</item>
+    </string-array>
+
+    <string-array name="snacks_header">
+        <item>Fries</item>
+        <item>Canned Coffee</item>
+        <item>Oreo Cookies</item>
+    </string-array>
+
+    <string-array name="sweets_desc">
+        <item>Sticky bread with something on the inside</item>
+        <item>Super pricey yogurt</item>
+        <item>Doesn\'t taste as good as it looks/sounds</item>
+    </string-array>
+
+    <string-array name="snacks_desc">
+        <item>It\'s coffee in a can</item>
+        <item>Always a meal for 4</item>
+        <item>Only strawberry flavour available</item>
+    </string-array>
 
     <string name="header_text">Your Order</string>
     <string name="billing_information">Billing Information</string>

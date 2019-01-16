@@ -1,6 +1,7 @@
 package local.hbar.deen.helloworld;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Setup Tab content
         final ViewPager productsViewPager = findViewById(R.id.products_view_pager);
-        final ProductsFragmentAdapter adapter = new ProductsFragmentAdapter(getSupportFragmentManager(), tabNames);
+        final ProductsTabAdapter adapter = new ProductsTabAdapter(getSupportFragmentManager(), tabNames);
         productsViewPager.setAdapter(adapter);
 
         productsViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // TODO: Simplify switch
         // TODO: Actually add some functionality (like theme switcher?)

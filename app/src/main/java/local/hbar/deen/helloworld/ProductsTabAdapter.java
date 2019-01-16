@@ -5,11 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class ProductsFragmentAdapter extends FragmentStatePagerAdapter {
+public class ProductsTabAdapter extends FragmentStatePagerAdapter {
 
     private String[] tabNames;
 
-    ProductsFragmentAdapter(FragmentManager fm, String[] tabNames) {
+    ProductsTabAdapter(FragmentManager fm, String[] tabNames) {
         super(fm);
         this.tabNames = tabNames;
     }

@@ -2,6 +2,7 @@ package local.hbar.deen.helloworld;
 
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,10 +29,13 @@ public class ProductsFragment extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // TODO: Handle hardcoded lengths
         final int[] orderCount = new int[3];
-        final String[] productNames;
-        String[] productsText = new String[3];
-        int[] productsDrawableId = new int[3];
+        
+        final String[] productsNames;
+        final String[] productsDescription;
+        final TypedArray productsDrawables;
+
         // TODO: Handle NPE
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_products, container, false);
@@ -41,29 +45,26 @@ public class ProductsFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
 
-        String productsType = getArguments().getString("items");
 
-        String packageName = getActivity().getPackageName();
-
-        if (Objects.equals(productsType, "sweets")) {
-            productNames = getResources().getStringArray(R.array.sweets);
+        if (Objects.equals(getArguments().getString("items"), "sweets")) {
+            productsNames = getResources().getStringArray(R.array.sweets_header);
+            productsDescription = getResources().getStringArray(R.array.sweets_desc);
+            productsDrawables = getResources().obtainTypedArray(R.array.sweets_images);
         } else {
-            productNames = getResources().getStringArray(R.array.snacks);
+            productsNames = getResources().getStringArray(R.array.snacks_header);
+            productsDescription = getResources().getStringArray(R.array.snacks_desc);
+            productsDrawables = getResources().obtainTypedArray(R.array.snacks_images);
         }
 
-        for (int i = 0; i < productsText.length; i++) {
-            productsText[i] = getString(getResources().getIdentifier(String.format("%s_desc", productNames[i]), "string", packageName));
-            productsDrawableId[i] = getResources().getIdentifier(String.format("%s_circle", productNames[i]), "drawable", packageName);
-        }
-
-
-        ProductsRecyclerAdapter mAdapter = new ProductsRecyclerAdapter(productsText, productsDrawableId);
+        ProductsRecyclerAdapter mAdapter = new ProductsRecyclerAdapter(productsNames,
+                productsDescription,
+                productsDrawables);
         mRecyclerView.setAdapter(mAdapter);
 
         view.findViewById(R.id.fab_cart).setOnClickListener((View) -> {
             Intent intent = new Intent(getActivity(), OrderActivity.class);
             intent.putExtra("orderCount", orderCount);
-            intent.putExtra("productsText", productNames);
+            intent.putExtra("productsText", productsNames);
             startActivity(intent);
         });
 
