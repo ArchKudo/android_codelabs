@@ -4,4 +4,9 @@
 <resources>
     <!-- Title of app -->
     <string name="app_name">Hello, Swipes</string>
+    <string name="default_name">Player Name</string>
+    <string name="default_club">Club Name</string>
+    <string name="default_age">Age: 10</string>
+    <string name="default_nationality">Nationality</string>
+    <string name="default_rating">100</string>
 </resources>
