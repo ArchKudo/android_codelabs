@@ -9,4 +9,5 @@
     <string name="default_age">Age: 10</string>
     <string name="default_nationality">Nationality</string>
     <string name="default_rating">100</string>
+    <string name="player_img_desc">Player Photo</string>
 </resources>

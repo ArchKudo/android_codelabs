@@ -10,13 +10,22 @@
         android:layout_height="match_parent"
         android:padding="8dp">
 
+        <ImageView
+            android:id="@+id/img_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/player_img_desc"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/default_name"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/img_player"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -26,7 +35,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/default_club"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/img_player"
             app:layout_constraintTop_toBottomOf="@id/text_name" />
 
         <TextView
@@ -35,16 +44,19 @@
             android:layout_height="wrap_content"
             android:text="@string/default_age"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/img_player"
             app:layout_constraintTop_toBottomOf="@id/text_club" />
+
 
         <TextView
             android:id="@+id/text_nationality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
             android:text="@string/default_nationality"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/num_rating"
