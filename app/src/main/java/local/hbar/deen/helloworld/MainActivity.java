@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<Player> players = new ArrayList<>();
+        ArrayList<ArrayList<String>> players = new ArrayList<>();
 
 
         try {
@@ -34,15 +35,11 @@ public class MainActivity extends AppCompatActivity {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             bufferedReader.readLine();
             String line;
-            String[] props;
+            ArrayList<String> props;
             while ((line = bufferedReader.readLine()) != null) {
-                props = line.split(",");
-                Player player = new Player(props[2],
-                        props[5],
-                        props[9],
-                        Integer.parseInt(props[7]),
-                        Integer.parseInt(props[3]));
-                players.add(player);
+                props = new ArrayList<>(Arrays.asList(line.split(",")));
+
+                players.add(props);
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Cannot read CSV file");

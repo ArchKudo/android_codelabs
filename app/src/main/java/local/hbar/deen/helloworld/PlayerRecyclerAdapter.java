@@ -8,32 +8,33 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class PlayerRecyclerAdapter extends
         RecyclerView.Adapter<PlayerRecyclerAdapter.PlayerViewHolder> {
 
-    private ArrayList<Player> players;
+    private ArrayList<ArrayList<String>> players;
 
-    PlayerRecyclerAdapter(ArrayList<Player> players) {
+    PlayerRecyclerAdapter(ArrayList<ArrayList<String>> players) {
         this.players = players;
     }
 
     @NonNull
     @Override
-    public PlayerRecyclerAdapter.PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.player_card, viewGroup, false);
+    public PlayerRecyclerAdapter.PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup,
+                                                                     int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.player_card,
+                viewGroup, false);
         return new PlayerViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PlayerViewHolder playerViewHolder, int i) {
-        Player player = players.get(i);
-        playerViewHolder.name.setText(player.getName());
-        playerViewHolder.nationality.setText(player.getNationality());
-        playerViewHolder.club.setText(player.getClub());
-        playerViewHolder.rating.setText(String.format(Locale.getDefault(), "%d", player.getRating()));
-        playerViewHolder.age.setText(String.format(Locale.getDefault(), "Age: %d", player.getAge()));
+        ArrayList<String> player = players.get(i);
+        playerViewHolder.name.setText(player.get(2));
+        playerViewHolder.nationality.setText(player.get(5));
+        playerViewHolder.club.setText(player.get(9));
+        playerViewHolder.rating.setText(player.get(7));
+        playerViewHolder.age.setText(player.get(3));
 
     }
 
