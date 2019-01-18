@@ -15,6 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/player_img_desc"
+            android:src="@mipmap/ic_launcher"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="@string/default_name"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/img_player"
+            app:layout_constraintStart_toEndOf="@id/img_player"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -35,7 +37,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/default_club"
-            app:layout_constraintStart_toStartOf="@id/img_player"
+            app:layout_constraintStart_toEndOf="@id/img_player"
             app:layout_constraintTop_toBottomOf="@id/text_name" />
 
         <TextView
@@ -44,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="@string/default_age"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/img_player"
+            app:layout_constraintStart_toEndOf="@id/img_player"
             app:layout_constraintTop_toBottomOf="@id/text_club" />
 
 
