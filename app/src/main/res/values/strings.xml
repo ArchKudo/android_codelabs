@@ -4,4 +4,5 @@
 <resources>
     <!-- Title of app -->
     <string name="app_name">He,lol</string>
+    <string name="napping">Napping!</string>
 </resources>
