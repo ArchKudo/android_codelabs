@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState != null) {
+            ((TextView) findViewById(R.id.text_msg)).setText(String.format(Locale.getDefault(),
+                    "%s", savedInstanceState.getString("old_text")));
+        }
+
         findViewById(R.id.btn_woke).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,12 +36,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("old_text",
+                ((TextView) findViewById(R.id.text_msg)).getText().toString());
+    }
 }
 
 class SleepTask extends AsyncTask<Void, Void, String> {
 
-    WeakReference<TextView> mTextView;
+    private WeakReference<TextView> mTextView;
 
     SleepTask(TextView mTextView) {
         this.mTextView = new WeakReference<>(mTextView);
