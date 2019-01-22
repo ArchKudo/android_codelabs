@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
-class SleepTask extends AsyncTask<Void, Void, String> {
+class SleepTask extends AsyncTask<Void, Integer, String> {
 
     private WeakReference<TextView> mTextView;
 
@@ -55,9 +55,16 @@ class SleepTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         Random random = new Random();
-        int delay = random.nextInt(10 + 1) * 100;
+        int delay = 1 + random.nextInt(10 + 1) * 100; // delay > 0
+
+
         try {
-            Thread.sleep(delay);
+            for (int i = 0; i <= delay; i += 10) {
+                publishProgress(i);
+                // s = (n/2)(a+l) => l = 2s/n _(where a = 0)
+                Thread.sleep(2 * i / delay);
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -68,5 +75,10 @@ class SleepTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         mTextView.get().setText(result);
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... progress) {
+        mTextView.get().setText(String.format(Locale.getDefault(), "%d", progress[0]));
     }
 }
