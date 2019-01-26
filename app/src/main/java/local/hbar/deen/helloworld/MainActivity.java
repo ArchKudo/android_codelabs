@@ -4,8 +4,12 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,13 +24,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
 
     EditText editText;
     TextView titleTextView;
@@ -53,7 +56,11 @@ public class MainActivity extends AppCompatActivity {
                         networkInfo = connectivityManager.getActiveNetworkInfo();
                     }
                     if (networkInfo != null && networkInfo.isConnected() && queryString.length() != 0) {
-                        new FetchBookTask(titleTextView, authorTextView).execute(queryString);
+//                        new FetchBookTask(titleTextView, authorTextView).execute(queryString);
+
+                        Bundle queryBundle = new Bundle();
+                        queryBundle.putString("queryString", queryString);
+                        getSupportLoaderManager().restartLoader(0, queryBundle, this);
                         titleTextView.setText(getString(R.string.loading_text));
                         authorTextView.setText("");
                     } else {
@@ -68,27 +75,25 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        if (getSupportLoaderManager().getLoader(0) != null) {
+            getSupportLoaderManager().initLoader(0, null, this);
+        }
+
     }
-}
 
-class FetchBookTask extends AsyncTask<String, Void, String> {
-
-    private WeakReference<TextView> titleTextWeakReference;
-    private WeakReference<TextView> authorTextWeakReference;
-
-    FetchBookTask(TextView titleText, TextView authorText) {
-        this.titleTextWeakReference = new WeakReference<>(titleText);
-        this.authorTextWeakReference = new WeakReference<>(authorText);
+    @NonNull
+    @Override
+    public Loader<String> onCreateLoader(int i, @Nullable Bundle bundle) {
+        String queryString = null;
+        if (bundle != null) {
+            queryString = bundle.getString("queryString");
+        }
+        return new BookLoader(this, queryString);
     }
 
     @Override
-    protected String doInBackground(String... strings) {
-        return NetworkUtils.getBookInfo(strings[0]);
-    }
+    public void onLoadFinished(@NonNull Loader<String> loader, String s) {
 
-
-    @Override
-    protected void onPostExecute(String s) {
         try {
             JSONObject jsonObject = new JSONObject(s);
             JSONArray jsonArray = jsonObject.getJSONArray("items");
@@ -110,21 +115,28 @@ class FetchBookTask extends AsyncTask<String, Void, String> {
             }
 
             if (title != null && authors != null) {
-                titleTextWeakReference.get().setText(title);
-                authorTextWeakReference.get().setText(authors);
+                titleTextView.setText(title);
+                authorTextView.setText(authors);
                 Log.i("FetchBookTask", String.format(Locale.getDefault(),
                         "Title: %s, Authors: %s", title, authors));
             } else {
-                titleTextWeakReference.get().setText(R.string.default_text);
-                authorTextWeakReference.get().setText("");
+                titleTextView.setText(R.string.default_text);
+                authorTextView.setText("");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            titleTextWeakReference.get().setText(R.string.default_text);
-            authorTextWeakReference.get().setText("");
+            titleTextView.setText(R.string.default_text);
+            authorTextView.setText("");
         }
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<String> loader) {
+
     }
 }
+
 
 class NetworkUtils {
     private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
@@ -182,5 +194,28 @@ class NetworkUtils {
             }
         }
         return bookJSONString;
+    }
+}
+
+
+class BookLoader extends AsyncTaskLoader<String> {
+
+    private String mQueryString;
+
+    BookLoader(@NonNull Context context, String queryString) {
+        super(context);
+        this.mQueryString = queryString;
+    }
+
+    @Override
+    protected void onStartLoading() {
+        super.onStartLoading();
+        forceLoad();
+    }
+
+    @Nullable
+    @Override
+    public String loadInBackground() {
+        return NetworkUtils.getBookInfo(mQueryString);
     }
 }
