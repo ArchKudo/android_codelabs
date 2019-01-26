@@ -1,11 +1,15 @@
 package local.hbar.deen.helloworld;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -37,8 +41,32 @@ public class MainActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.title_text);
         authorTextView = findViewById(R.id.author_text);
 
-        findViewById(R.id.search_btn).setOnClickListener((View v) ->
-                new FetchBookTask(titleTextView, authorTextView).execute(editText.getText().toString()));
+        findViewById(R.id.search_btn).setOnClickListener((View v) -> {
+                    String queryString = editText.getText().toString();
+                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(v.getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
+                    ConnectivityManager connectivityManager =
+                            (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = null;
+                    if (connectivityManager != null) {
+                        networkInfo = connectivityManager.getActiveNetworkInfo();
+                    }
+                    if (networkInfo != null && networkInfo.isConnected() && queryString.length() != 0) {
+                        new FetchBookTask(titleTextView, authorTextView).execute(queryString);
+                        titleTextView.setText(getString(R.string.loading_text));
+                        authorTextView.setText("");
+                    } else {
+                        if (queryString.length() == 0) {
+                            titleTextView.setText(getString(R.string.empty_text));
+                            authorTextView.setText("");
+                        } else {
+                            titleTextView.setText(getString(R.string.network_text));
+                            authorTextView.setText("");
+                        }
+                    }
+                }
+        );
 
     }
 }
