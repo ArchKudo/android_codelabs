@@ -4,4 +4,7 @@
 <resources>
     <!-- Title of app -->
     <string name="app_name">Hello, Books</string>
+    <string name="placeholder_text">Enter Title</string>
+    <string name="search">Search</string>
+    <string name="default_text">No results</string>
 </resources>
