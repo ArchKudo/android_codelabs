@@ -10,17 +10,6 @@ public class CustomReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String intentAction = intent.getAction();
-
-        if (intentAction != null) {
-            Toast.makeText(context,
-                    intentAction.equals(Intent.ACTION_POWER_CONNECTED)
-                            ? "Power Connected"
-                            : "Power Disconnected",
-                    Toast.LENGTH_SHORT)
-                    .show();
-        }
-
-
+        Toast.makeText(context, intent.getAction(), Toast.LENGTH_SHORT).show();
     }
 }
