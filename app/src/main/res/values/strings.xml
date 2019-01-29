@@ -4,4 +4,7 @@
 <resources>
     <!-- Title of app -->
     <string name="app_name">Hello, &#128276;</string>
+    <string name="send_notification">send notfication</string>
+    <string name="cancel_notification">cancel notification</string>
+    <string name="update_notification">update notification</string>
 </resources>
