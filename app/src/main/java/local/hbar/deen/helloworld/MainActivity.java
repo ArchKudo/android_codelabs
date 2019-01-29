@@ -3,7 +3,10 @@ package local.hbar.deen.helloworld;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,9 +18,12 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     private static final int NOTIFICATION_ID = 0;
-    private static String PRIMARY_CHANNEL_ID = "primary_notification_channel";
-    private NotificationManager mNotifyManager;
+    private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
 
+    private static String ACTION_UPDATE_NOTIFICATION;
+
+    private NotificationManager mNotifyManager;
+    private NotificationReceiver mNotificationReceiver = new NotificationReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +32,19 @@ public class MainActivity extends AppCompatActivity {
 
         createNotificationChannel();
 
+        ACTION_UPDATE_NOTIFICATION = getApplicationContext().getPackageName() +
+                "ACTION_UPDATE_NOTIFICATION";
+
         findViewById(R.id.notify_btn).setOnClickListener((View v) ->
-                mNotifyManager.notify(NOTIFICATION_ID, getNotificationBuilder().build())
+                mNotifyManager.notify(NOTIFICATION_ID,
+                        getNotificationBuilder()
+                                .addAction(R.drawable.ic_notification_icon,
+                                        "Update Notification",
+                                        PendingIntent.getBroadcast(this,
+                                                NOTIFICATION_ID,
+                                                new Intent(ACTION_UPDATE_NOTIFICATION),
+                                                PendingIntent.FLAG_ONE_SHOT))
+                                .build())
         );
 
         findViewById(R.id.cancel_btn).setOnClickListener((View v) ->
@@ -46,6 +63,13 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
+        registerReceiver(mNotificationReceiver, new IntentFilter(ACTION_UPDATE_NOTIFICATION));
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mNotificationReceiver);
+        super.onDestroy();
     }
 
     public void createNotificationChannel() {
@@ -82,4 +106,11 @@ public class MainActivity extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_notification_icon);
     }
 
+    class NotificationReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            findViewById(R.id.update_btn).performClick();
+        }
+    }
 }
