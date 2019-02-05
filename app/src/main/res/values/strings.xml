@@ -3,5 +3,6 @@
 
 <resources>
     <!-- Title of app -->
-    <string name="app_name">Hello, Swipes</string>
+    <string name="app_name">Hello, Android Architecture Components!</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
