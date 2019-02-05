@@ -3,5 +3,7 @@
 
 <resources>
     <!-- Title of app -->
-    <string name="app_name">Hello, Swipes</string>
+    <string name="app_name">Hello, SharedPrefs</string>
+    <string name="save">save</string>
+    <string name="save_place_holder">Enter number to be saved</string>
 </resources>
