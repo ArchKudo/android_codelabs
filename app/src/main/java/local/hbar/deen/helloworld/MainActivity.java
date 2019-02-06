@@ -1,5 +1,6 @@
 package local.hbar.deen.helloworld;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Entity;
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         void insert(Word word);
 
         @Query("SELECT * from word_table ORDER BY word ASC")
-        List<Word> getAll();
+        LiveData<List<Word>> getAll();
 
         @Query("DELETE FROM word_table")
         void deleteAll();
