@@ -1,6 +1,10 @@
 package local.hbar.deen.helloworld;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,4 +30,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Entity(tableName = "word_table")
+    class Word {
+
+        @PrimaryKey
+        @NonNull
+        @ColumnInfo(name = "word")
+        private String word;
+
+        Word(@NonNull String word) {
+            this.word = word;
+        }
+
+        String getWord() {
+            return this.word;
+        }
+    }
 }
