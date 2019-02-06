@@ -1,8 +1,11 @@
 package local.hbar.deen.helloworld;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Query;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +13,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,5 +50,18 @@ public class MainActivity extends AppCompatActivity {
         String getWord() {
             return this.word;
         }
+    }
+
+    @Dao
+    interface WordDAO {
+
+        @Insert
+        void insert(Word word);
+
+        @Query("SELECT * from word_table ORDER BY word ASC")
+        List<Word> getAll();
+
+        @Query("DELETE FROM word_table")
+        void deleteAll();
     }
 }
