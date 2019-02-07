@@ -19,8 +19,13 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -125,6 +130,57 @@ class WordViewModel extends AndroidViewModel {
     }
 }
 
+class WordsRecyclerViewAdapter extends RecyclerView.Adapter<WordsRecyclerViewAdapter.WordsViewHolder> {
+    private final LayoutInflater inflater;
+    private List<Word> words;
+
+    WordsRecyclerViewAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
+    }
+
+    @NonNull
+    @Override
+    public WordsRecyclerViewAdapter.WordsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup,
+                                                                       int i) {
+        TextView view = (TextView) inflater.inflate(R.layout.text_word, viewGroup, false);
+        return new WordsViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull WordsRecyclerViewAdapter.WordsViewHolder wordsViewHolder,
+                                 int i) {
+        if (words != null) {
+            wordsViewHolder.wordItemView.setText(words.get(i).getWord());
+        } else {
+            wordsViewHolder.wordItemView.setText(wordsViewHolder.wordItemView.getContext().getString(R.string.no_words_warn));
+            wordsViewHolder.wordItemView.setBackgroundColor(wordsViewHolder.wordItemView.getContext().getColor(R.color.secondaryDarkColor));
+        }
+    }
+
+    void setWords(List<Word> words) {
+        this.words = words;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        if (words != null) {
+            return words.size();
+        } else {
+            return 0;
+        }
+    }
+
+    class WordsViewHolder extends RecyclerView.ViewHolder {
+        private final TextView wordItemView;
+
+        private WordsViewHolder(TextView wordItemView) {
+            super(wordItemView);
+            this.wordItemView = wordItemView;
+        }
+    }
+}
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -135,13 +191,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fab.setOnClickListener((View view) ->
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+                        .setAction("Action", null).show());
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(new WordsRecyclerViewAdapter(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 

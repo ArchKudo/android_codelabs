@@ -5,4 +5,5 @@
     <!-- Title of app -->
     <string name="app_name">Hello, Android Architecture Components!</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="no_words_warn">Add More words! Using the \'+\' button</string>
 </resources>
