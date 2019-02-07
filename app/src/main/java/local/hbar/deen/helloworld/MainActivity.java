@@ -1,5 +1,6 @@
 package local.hbar.deen.helloworld;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
@@ -11,6 +12,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -47,6 +49,7 @@ class Word {
         this.word = word;
     }
 
+    @NonNull
     String getWord() {
         return this.word;
     }
@@ -56,9 +59,7 @@ class Word {
 abstract class WordRoomDatabase extends RoomDatabase {
     private static WordRoomDatabase INSTANCE;
 
-    abstract WordDAO wordDAO();
-
-    WordRoomDatabase getDatatbase(final Context context) {
+    static synchronized WordRoomDatabase getDatabase(final Context context) {
         if (INSTANCE != null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     WordRoomDatabase.class, "word_database")
@@ -66,6 +67,41 @@ abstract class WordRoomDatabase extends RoomDatabase {
                     .build();
         }
         return INSTANCE;
+    }
+
+    abstract WordDAO wordDAO();
+}
+
+class WordRepository {
+    private WordDAO wordDAO;
+    private LiveData<List<Word>> words;
+
+    WordRepository(Application application) {
+        WordRoomDatabase wordRoomDatabase = WordRoomDatabase.getDatabase(application);
+        wordDAO = wordRoomDatabase.wordDAO();
+        words = wordDAO.getAll();
+    }
+
+    LiveData<List<Word>> getAll() {
+        return words;
+    }
+
+    void insert(Word word) {
+        new insertAsyncTask(wordDAO).execute(word);
+    }
+
+    private static class insertAsyncTask extends AsyncTask<Word, Void, Void> {
+        private WordDAO wordDAO;
+
+        insertAsyncTask(WordDAO wordDAO) {
+            this.wordDAO = wordDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Word... words) {
+            wordDAO.insert(words[0]);
+            return null;
+        }
     }
 }
 
