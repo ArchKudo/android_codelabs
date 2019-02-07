@@ -1,6 +1,7 @@
 package local.hbar.deen.helloworld;
 
 import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
@@ -102,6 +103,25 @@ class WordRepository {
             wordDAO.insert(words[0]);
             return null;
         }
+    }
+}
+
+class WordViewModel extends AndroidViewModel {
+    private WordRepository wordRepository;
+    private LiveData<List<Word>> words;
+
+    WordViewModel(Application application) {
+        super(application);
+        wordRepository = new WordRepository(application);
+        words = wordRepository.getAll();
+    }
+
+    LiveData<List<Word>> getAll() {
+        return words;
+    }
+
+    void insert(Word word) {
+        wordRepository.insert(word);
     }
 }
 
