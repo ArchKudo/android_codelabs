@@ -3,6 +3,7 @@ package local.hbar.deen.helloworld;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Database;
@@ -65,17 +66,45 @@ class Word {
 abstract class WordRoomDatabase extends RoomDatabase {
     private static WordRoomDatabase INSTANCE;
 
+    private static RoomDatabase.Callback callback = new RoomDatabase.Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+            new PopulateDBAsync(INSTANCE).execute();
+        }
+    };
+
     static synchronized WordRoomDatabase getDatabase(final Context context) {
         if (INSTANCE != null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     WordRoomDatabase.class, "word_database")
                     .fallbackToDestructiveMigration()
+                    .addCallback(callback)
                     .build();
         }
         return INSTANCE;
     }
 
     abstract WordDAO wordDAO();
+
+    private static class PopulateDBAsync extends AsyncTask<Void, Void, Void> {
+
+        private final WordDAO wordDAO;
+        private final String[] words = {"Apple", "Banana", "Oranges"};
+
+        PopulateDBAsync(WordRoomDatabase wordRoomDatabase) {
+            wordDAO = wordRoomDatabase.wordDAO();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            wordDAO.deleteAll();
+            for (String word : words) {
+                wordDAO.insert(new Word(word));
+            }
+            return null;
+        }
+    }
 }
 
 class WordRepository {
