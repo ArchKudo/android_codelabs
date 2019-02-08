@@ -3,6 +3,7 @@ package local.hbar.deen.helloworld;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
@@ -17,6 +18,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -75,7 +77,7 @@ abstract class WordRoomDatabase extends RoomDatabase {
     };
 
     static synchronized WordRoomDatabase getDatabase(final Context context) {
-        if (INSTANCE != null) {
+        if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     WordRoomDatabase.class, "word_database")
                     .fallbackToDestructiveMigration()
@@ -212,6 +214,8 @@ class WordsRecyclerViewAdapter extends RecyclerView.Adapter<WordsRecyclerViewAda
 
 public class MainActivity extends AppCompatActivity {
 
+    private WordViewModel wordViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,10 +228,15 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show());
 
+        WordsRecyclerViewAdapter wordsRecyclerViewAdapter = new WordsRecyclerViewAdapter(this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new WordsRecyclerViewAdapter(this));
+        recyclerView.setAdapter(wordsRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
+
+        wordViewModel.getAll().observe(this,
+                (@Nullable List<Word> words) -> wordsRecyclerViewAdapter.setWords(words));
+
     }
-
-
 }
