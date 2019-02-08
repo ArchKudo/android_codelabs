@@ -6,4 +6,6 @@
     <string name="app_name">Hello, Android Architecture Components!</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="no_words_warn">Add More words! Using the \'+\' button</string>
+    <string name="enter_a_new_word">Enter a new word</string>
+    <string name="save">save</string>
 </resources>

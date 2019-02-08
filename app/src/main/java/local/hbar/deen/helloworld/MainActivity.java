@@ -214,7 +214,8 @@ class WordsRecyclerViewAdapter extends RecyclerView.Adapter<WordsRecyclerViewAda
 
 public class MainActivity extends AppCompatActivity {
 
-    private WordViewModel wordViewModel;
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(wordsRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
+        WordViewModel wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
 
         wordViewModel.getAll().observe(this,
                 (@Nullable List<Word> words) -> wordsRecyclerViewAdapter.setWords(words));
