@@ -10,17 +10,18 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,13 +30,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 @Dao
 interface WordDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Word word);
 
     @Query("SELECT * from word_table ORDER BY word ASC")
@@ -215,7 +217,7 @@ class WordsRecyclerViewAdapter extends RecyclerView.Adapter<WordsRecyclerViewAda
 public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
-
+    private WordViewModel wordViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,18 +228,34 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener((View view) ->
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show());
+                startActivityForResult(new Intent(MainActivity.this, NewWordActivity.class),
+                        NEW_WORD_ACTIVITY_REQUEST_CODE));
 
         WordsRecyclerViewAdapter wordsRecyclerViewAdapter = new WordsRecyclerViewAdapter(this);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(wordsRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        WordViewModel wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
+        wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
 
         wordViewModel.getAll().observe(this,
                 (@Nullable List<Word> words) -> wordsRecyclerViewAdapter.setWords(words));
 
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data.getStringExtra(NewWordActivity.EXTRA_REPLY) != null) {
+                wordViewModel.insert(new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY)));
+            }
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Could not save empty string!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

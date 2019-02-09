@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 public class NewWordActivity extends AppCompatActivity {
 
+    public static final String EXTRA_REPLY = "reply";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +21,7 @@ public class NewWordActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(((EditText) findViewById(R.id.input_new_word)).getText())) {
                 setResult(RESULT_CANCELED, replyIntent);
             } else {
-                replyIntent.putExtra("reply",
+                replyIntent.putExtra(EXTRA_REPLY,
                         ((EditText) findViewById(R.id.input_new_word)).getText().toString());
                 setResult(RESULT_OK, replyIntent);
             }
