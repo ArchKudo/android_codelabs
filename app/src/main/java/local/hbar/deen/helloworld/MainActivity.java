@@ -45,6 +45,9 @@ interface WordDAO {
 
     @Query("DELETE FROM word_table")
     void deleteAll();
+
+    @Query("SELECT * FROM word_table LIMIT 1")
+    Word[] getAny();
 }
 
 
@@ -102,9 +105,10 @@ abstract class WordRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            wordDAO.deleteAll();
-            for (String word : words) {
-                wordDAO.insert(new Word(word));
+            if (wordDAO.getAny().length < 1) {
+                for (String word : words) {
+                    wordDAO.insert(new Word(word));
+                }
             }
             return null;
         }
