@@ -130,13 +130,17 @@ class WordRepository {
     }
 
     void insert(Word word) {
-        new insertAsyncTask(wordDAO).execute(word);
+        new InsertAsyncTask(wordDAO).execute(word);
     }
 
-    private static class insertAsyncTask extends AsyncTask<Word, Void, Void> {
+    void deleteAll() {
+        new DeleteAllAsyncTask(wordDAO).execute();
+    }
+
+    private static class InsertAsyncTask extends AsyncTask<Word, Void, Void> {
         private WordDAO wordDAO;
 
-        insertAsyncTask(WordDAO wordDAO) {
+        InsertAsyncTask(WordDAO wordDAO) {
             this.wordDAO = wordDAO;
         }
 
@@ -144,6 +148,20 @@ class WordRepository {
         protected Void doInBackground(Word... words) {
             wordDAO.insert(words[0]);
             return null;
+        }
+    }
+
+    private static class DeleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private WordDAO wordDAO;
+
+        DeleteAllAsyncTask(WordDAO wordDAO) {
+            this.wordDAO = wordDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            wordDAO.deleteAll();
         }
     }
 }
@@ -164,6 +182,10 @@ class WordViewModel extends AndroidViewModel {
 
     void insert(Word word) {
         wordRepository.insert(word);
+    }
+
+    void deleteAll() {
+        wordRepository.deleteAll();
     }
 }
 
