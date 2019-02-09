@@ -27,6 +27,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -162,6 +164,7 @@ class WordRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             wordDAO.deleteAll();
+            return null;
         }
     }
 }
@@ -283,5 +286,21 @@ public class MainActivity extends AppCompatActivity {
                     "Could not save empty string!",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.clear_data) {
+            wordViewModel.deleteAll();
+            return true;
+        }
+        Toast.makeText(getApplicationContext(), "Cleared all entries!", Toast.LENGTH_SHORT).show();
+        return super.onOptionsItemSelected(item);
     }
 }
