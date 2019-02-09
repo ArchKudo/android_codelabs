@@ -8,6 +8,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -26,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +43,9 @@ interface WordDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Word word);
+
+    @Delete
+    void delete(Word word);
 
     @Query("SELECT * from word_table ORDER BY word ASC")
     LiveData<List<Word>> getAll();
@@ -135,6 +140,10 @@ class WordRepository {
         new InsertAsyncTask(wordDAO).execute(word);
     }
 
+    void delete(Word word) {
+        new DeleteAsyncTask(wordDAO).execute(word);
+    }
+
     void deleteAll() {
         new DeleteAllAsyncTask(wordDAO).execute();
     }
@@ -149,6 +158,20 @@ class WordRepository {
         @Override
         protected Void doInBackground(Word... words) {
             wordDAO.insert(words[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAsyncTask extends AsyncTask<Word, Void, Void> {
+        private WordDAO wordDAO;
+
+        DeleteAsyncTask(WordDAO wordDAO) {
+            this.wordDAO = wordDAO;
+        }
+
+        @Override
+        protected Void doInBackground(Word... words) {
+            wordDAO.delete(words[0]);
             return null;
         }
     }
@@ -187,6 +210,10 @@ class WordViewModel extends AndroidViewModel {
         wordRepository.insert(word);
     }
 
+    void delete(Word word) {
+        wordRepository.delete(word);
+    }
+
     void deleteAll() {
         wordRepository.deleteAll();
     }
@@ -217,6 +244,10 @@ class WordsRecyclerViewAdapter extends RecyclerView.Adapter<WordsRecyclerViewAda
             wordsViewHolder.wordItemView.setText(wordsViewHolder.wordItemView.getContext().getString(R.string.no_words_warn));
             wordsViewHolder.wordItemView.setBackgroundColor(wordsViewHolder.wordItemView.getContext().getColor(R.color.secondaryDarkColor));
         }
+    }
+
+    Word getWordAtPosition(int position) {
+        return words.get(position);
     }
 
     void setWords(List<Word> words) {
@@ -264,6 +295,21 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(wordsRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                wordViewModel.delete(wordsRecyclerViewAdapter.getWordAtPosition(viewHolder.getAdapterPosition()));
+            }
+        }).attachToRecyclerView(recyclerView);
 
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
 
